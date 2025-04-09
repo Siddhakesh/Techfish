@@ -161,25 +161,6 @@
       <button class="btn" onclick="showSellForm()">Sell</button>
     </div>
   </div>
-
-  <div id="sellForm" class="section hidden">
-    <h2>List an Item to Sell</h2>
-    <form onsubmit="return handleSellSubmit(event)">
-      <label for="sellItem">Item Name:</label>
-      <input type="text" id="sellItem" name="sellItem" required>
-
-      <label for="sellQuantity">Quantity:</label>
-      <input type="number" id="sellQuantity" name="sellQuantity" required>
-
-      <label for="sellPrice">Price per unit:</label>
-      <input type="text" id="sellPrice" name="sellPrice" required>
-
-      <label for="sellDescription">Description:</label>
-      <textarea id="sellDescription" name="sellDescription" required></textarea>
-
-      <button type="submit" class="btn">Submit</button>
-    </form>
-  </div>
 </div>
 
 <footer>
@@ -192,7 +173,7 @@
   }
 
   function showSellForm() {
-    document.getElementById('sellForm').classList.remove('hidden');
+   window.location.href = 'sell.html';
   }
 
   function handleSellSubmit(event) {
