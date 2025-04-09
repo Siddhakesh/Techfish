@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TechFish Marketplace</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #121212;
+      color: #f1f1f1;
+    }
+
+    video.bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.1;
+    }
+
+    header {
+      background: #1a1a1a;
+      color: #FFD700;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.8em;
+    }
+
+    nav {
+      background: #222;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: #f1f1f1;
+      text-decoration: none;
+      font-size: 1.1em;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .search-bar {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .search-bar input {
+      width: 80%;
+      padding: 10px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      background: #1e1e1e;
+      color: #f1f1f1;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.05);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #2980b9;
+      color: white;
+      font-size: 1em;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #3498db;
+    }
+
+    footer {
+      background: #1a1a1a;
+      color: #ccc;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+  <script>
+    function loadMarketplaceItems() {
+      const items = JSON.parse(localStorage.getItem('marketItems')) || [];
+      const itemGrid = document.getElementById('itemGrid');
+      itemGrid.innerHTML = '';
+
+      if (items.length > 0) {
+        items.forEach((item) => {
+          const itemCard = document.createElement('div');
+          itemCard.classList.add('card');
+          itemCard.innerHTML = `
+            <h2>${item.name}</h2>
+            <p><strong>Price:</strong> Rs ${item.price}</p>
+            <p><strong>Quantity:</strong> ${item.quantity}</p>
+            <p>${item.description}</p>
+            <button class="btn" onclick="addToCart('${item.name}', ${item.price})"><i class="fas fa-cart-plus"></i> Buy Now</button>
+          `;
+          itemGrid.appendChild(itemCard);
+        });
+      } else {
+        itemGrid.innerHTML = '<p>No items available on the marketplace. List your items for sale!</p>';
+      }
+    }
+
+    function addToCart(itemName, itemPrice) {
+      const item = { name: itemName, price: itemPrice };
+      const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+      currentCart.push(item);
+      localStorage.setItem('cart', JSON.stringify(currentCart));
+      alert(`${itemName} has been added to the cart!`);
+    }
+
+    function filterItems() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const items = document.querySelectorAll('.card');
+
+      items.forEach(item => {
+        const name = item.querySelector('h2').textContent.toLowerCase();
+        item.style.display = name.includes(query) ? 'block' : 'none';
+      });
+    }
+
+    window.onload = loadMarketplaceItems;
+  </script>
+</head>
+<body>
+  <video autoplay muted loop class="bg-video">
+    <source src="bg.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <header><i class="fas fa-store"></i> TechFish - Marketplace</header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="about.html"><i class="fas fa-users"></i> About Us</a></li>
+      <li><a href="services.html"><i class="fas fa-boxes"></i> Services</a></li>
+      <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+      <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+      <li><a href="sell.html"><i class="fas fa-upload"></i> Sell</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div class="search-bar">
+      <input type="text" placeholder="Search items..." id="searchInput" oninput="filterItems()"/>
+    </div>
+    <div class="grid" id="itemGrid"></div>
+  </div>
+
+  <footer>&copy; 2025 TechFish. All Rights Reserved.</footer>
+</body>
+</html>

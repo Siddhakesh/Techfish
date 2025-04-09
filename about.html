@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - TechFish</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #f1f1f1;
+    }
+
+    video.bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.15;
+    }
+
+    nav {
+      background: #1a1a1a;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1em;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #FFD700;
+    }
+
+    p, li {
+      line-height: 1.6;
+      color: #ddd;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    .contact {
+      text-align: center;
+      margin-top: 30px;
+      color: #ccc;
+    }
+
+    .contact a {
+      color: #1E90FF;
+      text-decoration: none;
+    }
+
+    .contact a:hover {
+      text-decoration: underline;
+    }
+
+    .icon {
+      margin-right: 8px;
+      color: #FFD700;
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop class="bg-video">
+    <source src="bg.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
+
+  <nav>
+    <ul>
+      <li><a href="index.html"><i class="fas fa-home icon"></i>Home</a></li>
+      <li><a href="about.html"><i class="fas fa-users icon"></i>About Us</a></li>
+      <li><a href="services.html"><i class="fas fa-concierge-bell icon"></i>Services</a></li>
+      <li><a href="contact.html"><i class="fas fa-envelope icon"></i>Contact</a></li>
+      <li><a href="login.html"><i class="fas fa-sign-in-alt icon"></i>Login</a></li>
+      <li><a href="signup.html"><i class="fas fa-user-plus icon"></i>Signup</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>About Us</h1>
+    <h2>Who We Are</h2>
+    <p>
+      Welcome to <strong>TechFish</strong>, a global import-export company committed to delivering high-quality products across international markets. We specialize in sourcing, supplying, and distributing a wide range of goods, ensuring seamless trade operations worldwide.
+    </p>
+
+    <h2>Our Mission</h2>
+    <p>
+      Our mission is to bridge global markets by providing reliable, efficient, and cost-effective trade solutions.
+      We strive to build strong relationships with suppliers and buyers, ensuring smooth transactions and the highest standards of quality.
+    </p>
+
+    <h2>What We Do</h2>
+    <p>
+      We offer a diverse range of products, including <strong>technology, industrial equipment, consumer goods, and raw materials</strong>. Our team handles logistics, documentation, customs clearance, and compliance to make global trade hassle-free.
+    </p>
+
+    <h2>Why Choose Us?</h2>
+    <ul>
+      <li><i class="fas fa-globe icon"></i><strong>Global Network:</strong> Trusted suppliers and buyers worldwide.</li>
+      <li><i class="fas fa-check-circle icon"></i><strong>Quality Assurance:</strong> International standard checks.</li>
+      <li><i class="fas fa-truck icon"></i><strong>Seamless Logistics:</strong> Fast and reliable shipping.</li>
+      <li><i class="fas fa-heart icon"></i><strong>Customer-Centric:</strong> Custom solutions tailored to you.</li>
+    </ul>
+
+    <h2>Our Vision</h2>
+    <p>
+      We aim to become a leading force in the import-export industry by embracing technology, sustainability, and ethical trading practices to create lasting value for our clients and partners.
+    </p>
+
+    <div class="contact">
+      <p><i class="fas fa-map-marker-alt icon"></i>Headquartered in <strong>Karjat, Maharashtra</strong></p>
+      <p><i class="fas fa-envelope icon"></i>Email: <a href="mailto:siddhakeshlanjewar@gmail.com">siddhakeshlanjewar@gmail.com</a></p>
+      <p><i class="fas fa-phone icon"></i>Phone: <a href="tel:8879171147">8879171147</a></p>
+    </div>
+  </div>
+</body>
+</html>

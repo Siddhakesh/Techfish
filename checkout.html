@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout Page - Dark Mode</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .container {
+      background-color: #1f1f1f;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,255,255,0.05);
+      width: 90%;
+      max-width: 600px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .container:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 20px rgba(0,255,255,0.1);
+    }
+
+    h2 {
+      color: #00cfff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      color: #cccccc;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border: 1px solid #444;
+      border-radius: 6px;
+      background-color: #2c2c2c;
+      color: #f1f1f1;
+    }
+
+    input:focus, select:focus {
+      border-color: #00cfff;
+      outline: none;
+    }
+
+    .btn {
+      background-color: #00cfff;
+      color: black;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 25px;
+      width: 100%;
+      transition: background-color 0.3s;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background-color: #00aac6;
+    }
+
+    .output {
+      margin-top: 30px;
+      background-color: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,255,255,0.05);
+      max-width: 600px;
+      width: 90%;
+    }
+
+    .output h3 {
+      margin-top: 0;
+      color: #00cfff;
+    }
+
+    .output p {
+      margin: 8px 0;
+      color: #cccccc;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Checkout Page -->
+<div class="container">
+  <h2>Checkout</h2>
+  <form id="checkoutForm">
+    <label>Full Name</label>
+    <input type="text" id="fullName" required>
+
+    <label>Email</label>
+    <input type="email" id="email" required>
+
+    <label>Address</label>
+    <input type="text" id="address" required>
+
+    <label>City</label>
+    <input type="text" id="city" required>
+
+    <label>Country</label>
+    <select id="country" required>
+      <option value="">Select Country</option>
+      <option value="United States">United States</option>
+      <option value="Canada">Canada</option>
+      <option value="United Kingdom">United Kingdom</option>
+      <option value="India">India</option>
+    </select>
+
+    <label>Card Number</label>
+    <input type="text" id="cardNumber" required oninput="validateCardNumber(this)">
+
+    <label>Expiration Date</label>
+    <input type="text" id="expiry" placeholder="MM/YY" required oninput="validateExpiry(this)">
+
+    <label>CVV</label>
+    <input type="text" id="cvv" required oninput="validateCVV(this)">
+
+    <button type="submit" class="btn">Complete Purchase</button>
+  </form>
+</div>
+
+<!-- Output Section -->
+<div id="output" class="output" style="display: none;">
+  <h3>Purchase Summary</h3>
+  <p><strong>Full Name:</strong> <span id="outName"></span></p>
+  <p><strong>Email:</strong> <span id="outEmail"></span></p>
+  <p><strong>Address:</strong> <span id="outAddress"></span></p>
+  <p><strong>City:</strong> <span id="outCity"></span></p>
+  <p><strong>Country:</strong> <span id="outCountry"></span></p>
+  <p><strong>Card:</strong> <span id="outCard"></span></p>
+  <p><strong>Expiry:</strong> <span id="outExpiry"></span></p>
+</div>
+
+<script>
+  function validateCardNumber(input) {
+    input.value = input.value.replace(/[^0-9]/g, '');
+  }
+
+  function validateExpiry(input) {
+    input.value = input.value.replace(/[^0-9\/]/g, '').slice(0, 5);
+    if (input.value.length === 2 && !input.value.includes('/')) {
+      input.value += '/';
+    }
+  }
+
+  function validateCVV(input) {
+    input.value = input.value.replace(/[^0-9]/g, '').slice(0, 3);
+  }
+
+  document.getElementById('checkoutForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Get values
+    const name = document.getElementById('fullName').value;
+    const email = document.getElementById('email').value;
+    const address = document.getElementById('address').value;
+    const city = document.getElementById('city').value;
+    const country = document.getElementById('country').value;
+    const card = document.getElementById('cardNumber').value;
+    const expiry = document.getElementById('expiry').value;
+
+    // Display values
+    document.getElementById('outName').textContent = name;
+    document.getElementById('outEmail').textContent = email;
+    document.getElementById('outAddress').textContent = address;
+    document.getElementById('outCity').textContent = city;
+    document.getElementById('outCountry').textContent = country;
+    document.getElementById('outCard').textContent = '**** **** **** ' + card.slice(-4);
+    document.getElementById('outExpiry').textContent = expiry;
+
+    document.getElementById('output').style.display = 'block';
+
+    // Optionally clear form
+    document.getElementById('checkoutForm').reset();
+  });
+</script>
+
+</body>
+</html>

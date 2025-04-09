@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TechFish - Sign In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      height: 100vh;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    .container {
+      width: 900px;
+      height: 600px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      display: flex;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+
+    .form-container {
+      flex: 1;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-container h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .form-container p {
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input {
+      padding: 15px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 1em;
+      transition: background 0.3s;
+    }
+
+    input::placeholder {
+      color: #ddd;
+    }
+
+    input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .forgot-password {
+      text-align: right;
+      font-size: 0.9em;
+      color: #ccc;
+      margin: 10px 0;
+    }
+
+    .sign-in-btn {
+      padding: 15px;
+      border: none;
+      background: #ffd700;
+      border-radius: 10px;
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #000;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .sign-in-btn:hover {
+      background: #e6c200;
+    }
+
+    .or {
+      text-align: center;
+      margin: 20px 0;
+      color: #ccc;
+    }
+
+    .google-btn {
+      background: white;
+      color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .google-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .google-btn img {
+      width: 22px;
+      margin-right: 10px;
+    }
+
+    .sign-up-text {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.95em;
+      color: #ccc;
+    }
+
+    .sign-up-text a {
+      color: #ffd700;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .image-container {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+        width: 95%;
+      }
+
+      .image-container {
+        height: 200px;
+      }
+
+      .form-container {
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="form-container">
+      <h1>Welcome Back!</h1>
+      <p>Please enter your login details</p>
+
+      <form id="loginForm">
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <a href="#" class="forgot-password">Forgot password?</a>
+        <button type="submit" class="sign-in-btn">Sign In</button>
+      </form>
+
+      <p class="or">or</p>
+
+      <button class="google-btn">
+        <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google">
+        Log in with Google
+      </button>
+
+      <p class="sign-up-text">
+        Back to <a href="index.html">Home</a>
+      </p>
+      <p class="sign-up-text">
+        Don’t have an account? <a href="signup.html">Sign Up</a>
+      </p>
+    </div>
+
+    <div class="image-container">
+      <img src="https://imgs.search.brave.com/Z4XPf7OuiqtzgDMFng4UqtCzgLPpeUmVPC3kXN2p4Vs/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9yZXMu/Y2xvdWRpbmFyeS5j/b20vemVuYnVzaW5l/c3MvcV9hdXRvLHdf/NTI1L3YxL3NoYXJl/ZC1hc3NldHMvczIv/cmFzdGVyL2Nhcmdv/LW9uLXNoaXAuanBn" alt="Image"/>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const response = await fetch('http://127.0.0.1:5500/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          alert('Login successful!');
+          window.location.href = 'Afterlogin.html';
+        } else {
+          alert('Invalid username or password.');
+        }
+      } catch (error) {
+        alert('Error connecting to the server.');
+        console.error(error);
+      }
+    });
+  </script>
+
+</body>
+</html>

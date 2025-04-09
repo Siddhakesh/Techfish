@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      height: 100vh;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      color: #fff;
+      position: relative;
+    }
+
+    .container {
+      width: 900px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      display: flex;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+
+    .form-container {
+      flex: 1;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-container h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input {
+      padding: 15px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 1em;
+    }
+
+    input::placeholder {
+      color: #ddd;
+    }
+
+    input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .terms {
+      font-size: 0.9em;
+      margin: 10px 0;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .submit-btn {
+      padding: 15px;
+      background: #ffd700;
+      border-radius: 10px;
+      border: none;
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #000;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #e6c200;
+    }
+
+    .signin {
+      margin-top: 20px;
+      font-size: 0.95em;
+      color: #ccc;
+    }
+
+    .signin a {
+      color: #ffd700;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .thank-you {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      display: none;
+      color: white;
+    }
+
+    .thank-you.active {
+      display: block;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -60%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h1>Create an Account</h1>
+      <form id="signupForm">
+        <input type="text" id="name" name="name" placeholder="Your Name" required />
+        <input type="text" id="username" name="username" placeholder="Choose a username" required />
+        <input type="email" id="email" name="email" placeholder="Your email address" required />
+        <input type="password" id="password" name="password" placeholder="6+ characters" required />
+        <div class="terms">
+          <input type="checkbox" id="agree" required />
+          <label for="agree">I agree to the Terms of Service and Privacy Policy.</label>
+        </div>
+        <button type="submit" class="submit-btn">Sign Up</button>
+      </form>
+      <div class="signin">
+        Already have an account? <a href="login.html">Sign In</a><br>
+        <a href="index.html">Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="thank-you" id="thankYou">
+    <h2>✨ Thank You!</h2>
+    <p>Your account has been successfully created.</p>
+  </div>
+
+  <canvas id="confettiCanvas"></canvas>
+  <audio id="successSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9d38faaf42.mp3?filename=success-1-6297.mp3"></audio>
+
+  <script>
+    function validatePassword(password) {
+      const hasUpperCase = /[A-Z]/.test(password);
+      const hasNumber = /\d/.test(password);
+      const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+      return hasUpperCase && hasNumber && hasSymbol;
+    }
+
+    document.getElementById('signupForm').addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const agree = document.getElementById('agree').checked;
+
+      if (name === '' || username === '' || email === '') {
+        alert('All fields are required.');
+        return;
+      }
+      if (!validatePassword(password)) {
+        alert('Password must contain at least one uppercase letter, one number, and one special character.');
+        return;
+      }
+      if (password.length < 6) {
+        alert('Password must be at least 6 characters long.');
+        return;
+      }
+      if (!agree) {
+        alert('You must agree to the terms.');
+        return;
+      }
+
+      const formData = { name, username, email, password };
+
+      try {
+        const response = await fetch('http://127.0.0.1:5500/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+        alert(result.message);
+
+        if (response.ok) {
+          document.getElementById('thankYou').classList.add('active');
+          document.getElementById('successSound').play();
+          startConfetti();
+          setTimeout(() => window.location.href = 'login.html', 4000);
+        }
+      } catch (error) {
+        alert('Error connecting to the server.');
+        console.error(error);
+      }
+    });
+
+    // Confetti
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let confetti = [];
+
+    function startConfetti() {
+      confetti = Array.from({ length: 150 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * -canvas.height,
+        r: Math.random() * 6 + 4,
+        d: Math.random() * 10 + 5,
+        color: `hsl(${Math.random() * 360}, 100%, 60%)`,
+        tilt: Math.random() * 10 - 5,
+        tiltAngle: 0
+      }));
+      animateConfetti();
+    }
+
+    function animateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetti.forEach(c => {
+        c.y += c.d / 2;
+        c.tiltAngle += 0.1;
+        c.tilt = Math.sin(c.tiltAngle) * 10;
+        ctx.beginPath();
+        ctx.fillStyle = c.color;
+        ctx.ellipse(c.x + c.tilt, c.y, c.r, c.r / 2, 0, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      confetti = confetti.filter(c => c.y < canvas.height + 20);
+      if (confetti.length > 0) requestAnimationFrame(animateConfetti);
+    }
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
