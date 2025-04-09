@@ -179,7 +179,8 @@
       <h1>Welcome Back!</h1>
       <p>Please enter your login details</p>
 
-      <form id="loginForm">
+      <!-- Updated form with redirect -->
+      <form action="Afterlogin.html" method="GET">
         <input type="text" id="username" placeholder="Username" required />
         <input type="password" id="password" placeholder="Password" required />
         <a href="#" class="forgot-password">Forgot password?</a>
@@ -205,33 +206,6 @@
       <img src="https://imgs.search.brave.com/Z4XPf7OuiqtzgDMFng4UqtCzgLPpeUmVPC3kXN2p4Vs/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9yZXMu/Y2xvdWRpbmFyeS5j/b20vemVuYnVzaW5l/c3MvcV9hdXRvLHdf/NTI1L3YxL3NoYXJl/ZC1hc3NldHMvczIv/cmFzdGVyL2Nhcmdv/LW9uLXNoaXAuanBn" alt="Image"/>
     </div>
   </div>
-
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', async function(event) {
-      event.preventDefault();
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-
-      try {
-        fetch("https://techfish.onrender.com/login", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ username, password })
-        });
-
-        const result = await response.json();
-        if (result.success) {
-          alert('Login successful!');
-          window.location.href = 'Afterlogin.html';
-        } else {
-          alert('Invalid username or password.');
-        }
-      } catch (error) {
-        alert('Error connecting to the server.');
-        console.error(error);
-      }
-    });
-  </script>
 
 </body>
 </html>
